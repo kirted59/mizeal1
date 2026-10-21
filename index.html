@@ -28,7 +28,7 @@ h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:14px 0 7px;color:var(
 .field{margin:9px 0}.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .small{font-size:12px;color:var(--muted)}.status{padding:9px 11px;background:#0a1321;border:1px solid var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
-.dragon{font-size:54px;text-align:center;filter:drop-shadow(0 0 12px #f6c95d55);margin:5px}
+.dragon{text-align:center;filter:drop-shadow(0 0 12px #f6c95d55);margin:5px}
 hr{border:0;border-top:1px solid var(--line);margin:15px 0}
 a{color:var(--accent)}.gold{color:var(--gold)}
 @media(max-width:800px){main{grid-template-columns:1fr;padding:8px 12px 24px}.chat{height:min(48vh,390px);min-height:260px}header{align-items:flex-start;padding:16px 12px 8px}.logo{width:54px;height:54px;font-size:29px}.panel{padding:13px;border-radius:15px}.composer{position:sticky;bottom:0;background:#0e1829;padding-top:6px}.composer button{white-space:nowrap}.quick button{flex:1 1 auto}}
@@ -36,7 +36,7 @@ a{color:var(--accent)}.gold{color:var(--gold)}
 </head>
 <body>
 <header>
-  <div class="logo" aria-hidden="true">🐉</div>
+  <div class="logo" aria-hidden="true"><svg viewBox="0 0 100 100" width="46" height="46"><polygon points="50,4 92,27 92,73 50,96 8,73 8,27" fill="#0b1426" stroke="var(--gold)" stroke-width="4"/><path d="M18 50 Q50 20 82 50 Q50 80 18 50Z" fill="none" stroke="var(--accent)" stroke-width="3"/><circle cx="50" cy="50" r="12" fill="var(--gold)"/><circle cx="50" cy="50" r="5" fill="#0b1426"/><path d="M50 8V24M50 76V92M14 30l12 8M86 30l-12 8" stroke="var(--gold)" stroke-width="3"/></svg></div>
   <div><h1 id="title">TACHYON</h1><p id="subtitle">Ton compagnon de duel, de discussion et de recherche</p></div>
 </header>
 <main>
@@ -67,7 +67,7 @@ a{color:var(--accent)}.gold{color:var(--gold)}
   <p class="small" id="saveStatus">Les réglages sont conservés dans ce navigateur sur cet appareil.</p>
   <hr>
   <h2>🐲 Dragon Tachyon</h2>
-  <div class="dragon" id="dragon">🐉</div>
+  <div class="dragon" id="dragon"><svg viewBox="0 0 120 100" width="150" height="125" role="img" aria-label="Dragon Tachyon (dessin original)"><path d="M45 30L35 6L60 26ZM70 25L74 2L90 30Z" fill="#274a78" stroke="var(--gold)" stroke-width="2"/><path d="M8 62L40 30L80 24L114 46L100 62L72 58L52 82L24 76Z" fill="#1c3557" stroke="var(--gold)" stroke-width="3" stroke-linejoin="round"/><path d="M40 36L70 40M30 58L60 52" stroke="var(--accent)" stroke-width="2" opacity=".7"/><circle cx="80" cy="42" r="9" fill="var(--accent)" opacity=".35"/><circle cx="80" cy="42" r="5" fill="var(--gold)"/><path d="M104 50l4 2" stroke="var(--gold)" stroke-width="3"/></svg></div>
   <div class="status" id="dragonStatus">Système prêt. En attente de tes ordres, duelliste.</div>
   <div class="quick"><button id="summon">Invoquer Tachyon</button><button id="clear">Nouvelle conversation</button></div>
   <hr>
