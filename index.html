@@ -32,16 +32,19 @@ h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:14px 0 7px;color:var(
 hr{border:0;border-top:1px solid var(--line);margin:15px 0}
 a{color:var(--accent)}.gold{color:var(--gold)}
 @media(max-width:800px){main{grid-template-columns:1fr;padding:8px 12px 24px}.chat{height:min(48vh,390px);min-height:260px}header{align-items:flex-start;padding:16px 12px 8px}.logo{width:54px;height:54px;font-size:29px}.panel{padding:13px;border-radius:15px}.composer{position:sticky;bottom:0;background:#0e1829;padding-top:6px}.composer button{white-space:nowrap}.quick button{flex:1 1 auto}}
+main{grid-template-columns:minmax(0,1fr);max-width:760px}
+.stage{text-align:center}.stage svg{height:min(48vh,440px);width:auto;filter:drop-shadow(0 0 24px #f6c95d55);animation:fl 4s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-8px)}}
+.chat{height:min(32vh,300px);min-height:190px}summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><symbol id="hero" viewBox="0 0 120 290"><g fill="#e3e9f4" stroke="var(--gold)" stroke-width="2.5" stroke-linejoin="round"><path d="M38 66L22 120L16 168L26 170L34 128L44 80Z"/><path d="M82 66L98 120L104 168L94 170L86 128L76 80Z"/><path d="M42 130L38 215L34 262H52L58 215L60 140Z"/><path d="M78 130L82 215L86 262H68L62 215L60 140Z"/><path d="M38 64Q60 58 82 64L78 130Q60 138 42 130Z"/><ellipse cx="42" cy="272" rx="14" ry="9"/><ellipse cx="78" cy="272" rx="14" ry="9"/><path d="M40 26L33 2L51 16ZM80 26L87 2L69 16Z"/><ellipse cx="60" cy="34" rx="22" ry="24"/><ellipse cx="60" cy="90" rx="14" ry="18" fill="#f4f7fc"/></g><path d="M60 108V150" stroke="var(--gold)" stroke-width="3"/><ellipse cx="46" cy="215" rx="7" ry="11" fill="var(--gold)"/><ellipse cx="74" cy="215" rx="7" ry="11" fill="var(--gold)"/><circle cx="21" cy="175" r="6" fill="#1a2233"/><circle cx="99" cy="175" r="6" fill="#1a2233"/><ellipse cx="60" cy="36" rx="16" ry="11" fill="#0e1424"/><g filter="url(#glow)" fill="#ffd24a"><circle cx="53" cy="36" r="4.5"/><circle cx="67" cy="36" r="4.5"/></g></symbol></defs></svg>
-<div id="splash" style="position:fixed;inset:0;z-index:99;background:#080d1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .6s;cursor:pointer"><svg viewBox="0 0 120 290" style="height:62vh;max-height:520px;filter:drop-shadow(0 0 22px #f6c95d55)"><use href="#hero"/></svg><div style="font-size:28px;letter-spacing:.2em;color:var(--gold)">TACHYON</div><div class="small">Touche pour entrer</div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><symbol id="hero" viewBox="0 0 160 320"><g fill="#e3e9f4" stroke="var(--gold)" stroke-width="3" stroke-linejoin="round"><path d="M50 92L30 150L22 215L36 218L46 160L60 106Z"/><path d="M110 92L130 150L138 215L124 218L114 160L100 106Z"/><path d="M58 168L52 262L46 296H70L74 262L80 176Z"/><path d="M102 168L108 262L114 296H90L86 262L80 176Z"/><path d="M50 92Q80 80 110 92L104 160Q80 172 56 160Z"/><ellipse cx="57" cy="304" rx="21" ry="10"/><ellipse cx="103" cy="304" rx="21" ry="10"/><path d="M54 44L38 4L68 22ZM106 44L122 4L92 22Z"/><ellipse cx="80" cy="48" rx="30" ry="32"/><ellipse cx="80" cy="124" rx="18" ry="25" fill="#f4f7fc"/></g><path d="M80 148V196M56 160Q80 150 104 160" stroke="var(--gold)" stroke-width="3" fill="none"/><ellipse cx="63" cy="232" rx="8" ry="15" fill="var(--gold)"/><ellipse cx="97" cy="232" rx="8" ry="15" fill="var(--gold)"/><path d="M33 150L27 208M127 150L133 208" stroke="var(--gold)" stroke-width="3"/><circle cx="29" cy="225" r="8" fill="#1a2233"/><circle cx="131" cy="225" r="8" fill="#1a2233"/><rect x="72" y="78" width="16" height="12" fill="#1a2233"/><path d="M57 46Q80 30 103 46Q105 68 80 69Q55 68 57 46Z" fill="#0e1424"/><g filter="url(#glow)" fill="#ffd24a"><ellipse cx="69" cy="52" rx="7" ry="5.5"/><ellipse cx="91" cy="52" rx="7" ry="5.5"/></g></symbol></defs></svg>
 <header>
   <div class="logo" aria-hidden="true"><svg viewBox="0 0 100 100" width="46" height="46"><polygon points="50,4 92,27 92,73 50,96 8,73 8,27" fill="#0b1426" stroke="var(--gold)" stroke-width="4"/><path d="M18 50 Q50 20 82 50 Q50 80 18 50Z" fill="none" stroke="var(--accent)" stroke-width="3"/><circle cx="50" cy="50" r="12" fill="var(--gold)"/><circle cx="50" cy="50" r="5" fill="#0b1426"/><path d="M50 8V24M50 76V92M14 30l12 8M86 30l-12 8" stroke="var(--gold)" stroke-width="3"/></svg></div>
   <div><h1 id="title">TACHYON</h1><p id="subtitle">Ton compagnon de duel, de discussion et de recherche</p></div>
 </header>
 <main>
+<section class="stage"><svg viewBox="0 0 160 320" role="img" aria-label="Avatar de Tachyon (dessin original)"><use href="#hero"/></svg></section>
 <section class="panel">
   <h2>✦ Conversation</h2>
   <div class="chat" id="chat" aria-live="polite"></div>
@@ -56,7 +59,7 @@ a{color:var(--accent)}.gold{color:var(--gold)}
   </div>
   <p class="small">Prototype local : les réponses de base sont prédéfinies. La recherche ouvre un moteur de recherche et n'est pas une réponse IA intégrée.</p>
 </section>
-<aside class="panel">
+<aside class="panel"><details><summary>⚙ Personnalisation et Dragon Tachyon</summary>
   <h2>⚙ Personnaliser ton compagnon</h2>
   <div class="field"><label for="name">Nom de l'assistant</label><input id="name" value="Tachyon" maxlength="30"></div>
   <div class="field"><label for="persona">Personnalité</label><select id="persona"><option value="mizael">Inspiré de Mizael : fier, sérieux, loyal</option><option value="strategist">Stratège calme et confiant</option><option value="friendly">Ami drôle et chaleureux</option><option value="hero">Héroïque et motivant</option><option value="mysterious">Mystérieux et théâtral</option><option value="custom">Personnalité personnalisée</option></select></div>
@@ -68,7 +71,6 @@ a{color:var(--accent)}.gold{color:var(--gold)}
   <button id="save" style="width:100%">Enregistrer ma personnalisation</button>
   <p class="small" id="saveStatus">Les réglages sont conservés dans ce navigateur sur cet appareil.</p>
   <hr>
-  <div style="text-align:center"><svg viewBox="0 0 120 290" height="170"><use href="#hero"/></svg></div>
   <h2>🐲 Dragon Tachyon</h2>
   <div class="dragon" id="dragon"><svg viewBox="0 0 120 100" width="150" height="125" role="img" aria-label="Dragon Tachyon (dessin original)"><path d="M45 30L35 6L60 26ZM70 25L74 2L90 30Z" fill="#274a78" stroke="var(--gold)" stroke-width="2"/><path d="M8 62L40 30L80 24L114 46L100 62L72 58L52 82L24 76Z" fill="#1c3557" stroke="var(--gold)" stroke-width="3" stroke-linejoin="round"/><path d="M40 36L70 40M30 58L60 52" stroke="var(--accent)" stroke-width="2" opacity=".7"/><circle cx="80" cy="42" r="9" fill="var(--accent)" opacity=".35"/><circle cx="80" cy="42" r="5" fill="var(--gold)"/><path d="M104 50l4 2" stroke="var(--gold)" stroke-width="3"/></svg></div>
   <div class="status" id="dragonStatus">Système prêt. En attente de tes ordres, duelliste.</div>
@@ -76,7 +78,7 @@ a{color:var(--accent)}.gold{color:var(--gold)}
   <hr>
   <h3>Ce que cette version sait faire</h3>
   <p class="small">Discuter avec des réponses simples, raconter des blagues, proposer des mini-jeux, lancer une recherche web, lire une réponse à voix haute et sauvegarder tes préférences. Projet de fan non officiel. Une connexion à un vrai modèle d'IA sera nécessaire pour des conversations libres et des recherches résumées automatiquement.</p>
-</aside>
+</details></aside>
 </main>
 <script>
 const $ = id => document.getElementById(id);
@@ -148,7 +150,6 @@ if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
   navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
 }
 
-(()=>{const sp=$("splash"),h=()=>{sp.style.opacity=0;setTimeout(()=>sp.remove(),600)};sp.onclick=h;setTimeout(h,3500);})();
 addMessage("Salutations, duelliste ! Je suis prêt à discuter, jouer et t'aider. Personnalise-moi dans le panneau de droite. Pour l'instant, je suis un prototype sans IA connectée.");
 </script>
 </body>
