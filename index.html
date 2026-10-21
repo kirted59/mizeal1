@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080d1a">
+<meta name="description" content="Tachyon, assistant personnel personnalisable pour discuter, jouer et faire des recherches.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>Tachyon — Assistant personnel</title>
+<style>
+:root{--bg:#080d1a;--panel:#101a2b;--panel2:#142239;--text:#edf4ff;--muted:#a7b8d2;--gold:#f6c95d;--accent:#6ed9ff;--line:#263b5b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#172a47 0,#080d1a 55%);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Arial,sans-serif}
+button,input,textarea,select{font:inherit} button,input,select{min-height:44px} textarea{resize:vertical} body{padding-bottom:env(safe-area-inset-bottom)}button{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:10px 13px;background:#1a2b45;color:var(--text)}button:hover{border-color:var(--gold)}input,textarea,select{width:100%;background:#08111f;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}
+header{padding:22px 18px 12px;max-width:1200px;margin:auto;display:flex;gap:16px;align-items:center}
+.logo{width:68px;height:68px;flex-shrink:0;border:2px solid var(--gold);border-radius:20px;display:grid;place-items:center;font-size:36px;background:linear-gradient(145deg,#1c3557,#070c17);box-shadow:0 0 24px #f6c95d20}
+h1{margin:0;font-size:clamp(24px,4vw,36px);letter-spacing:.04em}header p{margin:3px 0;color:var(--muted)}
+main{max-width:1200px;margin:auto;padding:12px 18px 28px;display:grid;grid-template-columns: minmax(0,1.5fr) minmax(260px,.8fr);gap:16px}
+.panel{background:#0e1829eF;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 12px 40px #0003}
+h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:14px 0 7px;color:var(--gold)}
+.chat{height:390px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:4px 2px 12px}
+.msg{max-width:88%;padding:11px 13px;border-radius:15px;white-space:pre-wrap;overflow-wrap:anywhere}
+.bot{align-self:flex-start;background:#172841;border:1px solid #2b4569}.user{align-self:flex-end;background:#233f5c;border:1px solid #3c6287}
+.who{font-size:11px;color:var(--gold);display:block;margin-bottom:3px;letter-spacing:.08em}
+.composer{display:flex;gap:8px;margin-top:8px}.composer input{min-width:0}
+.quick{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.quick button{font-size:13px;padding:8px 10px}
+.field{margin:9px 0}.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.small{font-size:12px;color:var(--muted)}.status{padding:9px 11px;background:#0a1321;border:1px solid var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
+.dragon{font-size:54px;text-align:center;filter:drop-shadow(0 0 12px #f6c95d55);margin:5px}
+hr{border:0;border-top:1px solid var(--line);margin:15px 0}
+a{color:var(--accent)}.gold{color:var(--gold)}
+@media(max-width:800px){main{grid-template-columns:1fr;padding:8px 12px 24px}.chat{height:min(48vh,390px);min-height:260px}header{align-items:flex-start;padding:16px 12px 8px}.logo{width:54px;height:54px;font-size:29px}.panel{padding:13px;border-radius:15px}.composer{position:sticky;bottom:0;background:#0e1829;padding-top:6px}.composer button{white-space:nowrap}.quick button{flex:1 1 auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" aria-hidden="true">🐉</div>
+  <div><h1 id="title">TACHYON</h1><p id="subtitle">Ton compagnon de duel, de discussion et de recherche</p></div>
+</header>
+<main>
+<section class="panel">
+  <h2>✦ Conversation</h2>
+  <div class="chat" id="chat" aria-live="polite"></div>
+  <div class="composer"><input id="message" placeholder="Écris un message à Tachyon…" autocomplete="off"><button id="send">Envoyer</button></div>
+  <div class="quick">
+    <button data-action="joke">😂 Raconte une blague</button>
+    <button data-action="quiz">🧠 Lance un quiz</button>
+    <button data-action="riddle">🕵️ Énigme</button>
+    <button data-action="motivate">⚡ Encourage-moi</button>
+    <button data-action="research">🔎 Recherche web</button>
+    <button data-action="voice">🔊 Lire la dernière réponse</button>
+  </div>
+  <p class="small">Prototype local : les réponses de base sont prédéfinies. La recherche ouvre un moteur de recherche et n'est pas une réponse IA intégrée.</p>
+</section>
+<aside class="panel">
+  <h2>⚙ Personnaliser ton compagnon</h2>
+  <div class="field"><label for="name">Nom de l'assistant</label><input id="name" value="Tachyon" maxlength="30"></div>
+  <div class="field"><label for="persona">Personnalité</label><select id="persona"><option value="mizael">Inspiré de Mizael : fier, sérieux, loyal</option><option value="strategist">Stratège calme et confiant</option><option value="friendly">Ami drôle et chaleureux</option><option value="hero">Héroïque et motivant</option><option value="mysterious">Mystérieux et théâtral</option><option value="custom">Personnalité personnalisée</option></select></div>
+  <div class="field"><label for="custom">Décris sa personnalité (facultatif)</label><textarea id="custom" rows="2" placeholder="Ex. loyal, drôle, passionné de dragons…"></textarea></div>
+  <div class="grid2">
+    <div class="field"><label for="color">Couleur principale</label><select id="color"><option value="gold">Or Tachyon</option><option value="blue">Bleu cosmique</option><option value="red">Rouge draconique</option><option value="green">Vert astral</option></select></div>
+    <div class="field"><label for="voice">Voix</label><select id="voice"><option value="off">Lecture manuelle (bouton 🔊)</option><option value="auto">Lecture automatique des réponses</option></select></div>
+  </div>
+  <button id="save" style="width:100%">Enregistrer ma personnalisation</button>
+  <p class="small" id="saveStatus">Les réglages sont conservés dans ce navigateur sur cet appareil.</p>
+  <hr>
+  <h2>🐲 Dragon Tachyon</h2>
+  <div class="dragon" id="dragon">🐉</div>
+  <div class="status" id="dragonStatus">Système prêt. En attente de tes ordres, duelliste.</div>
+  <div class="quick"><button id="summon">Invoquer Tachyon</button><button id="clear">Nouvelle conversation</button></div>
+  <hr>
+  <h3>Ce que cette version sait faire</h3>
+  <p class="small">Discuter avec des réponses simples, raconter des blagues, proposer des mini-jeux, lancer une recherche web, lire une réponse à voix haute et sauvegarder tes préférences. Projet de fan non officiel. Une connexion à un vrai modèle d'IA sera nécessaire pour des conversations libres et des recherches résumées automatiquement.</p>
+</aside>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+let lastReply = "";
+let quizAnswer = 0;
+const jokes = [
+  "Pourquoi le dragon est-il mauvais en cache-cache ? Parce que quand il éternue, tout le monde le repère. 🐉",
+  "Un duelliste dit à son ordinateur : « Je t'invoque ! » L'ordinateur répond : « Désolé, mise à jour en cours. »",
+  "Pourquoi Tachyon aime les maths ? Parce qu'il maîtrise les puissances… cosmiques !",
+  "Mon dragon a essayé de faire du sport. Il a commencé par un échauffement… de l'atmosphère."
+];
+const quizzes = [
+  {q:"Quiz : quelle planète est surnommée la planète rouge ?",a:["Vénus","Mars","Jupiter"],correct:1,why:"Mars est surnommée la planète rouge à cause des oxydes de fer à sa surface."},
+  {q:"Quiz : combien de côtés possède un hexagone ?",a:["5","6","8"],correct:1,why:"Un hexagone possède six côtés."},
+  {q:"Quiz : quel est le plus grand océan terrestre ?",a:["Atlantique","Indien","Pacifique"],correct:2,why:"L'océan Pacifique est le plus vaste."}
+];
+function settings(){return {name:$("name").value.trim()||"Tachyon",persona:$("persona").value,custom:$("custom").value,color:$("color").value,voice:$("voice").value};}
+function addMessage(text,from="bot"){
+  const div=document.createElement("div");div.className="msg "+from;
+  const who=document.createElement("span");who.className="who";who.textContent=from==="bot"?settings().name.toUpperCase():"TOI";
+  div.appendChild(who);div.appendChild(document.createTextNode(text));$("chat").appendChild(div);$("chat").scrollTop=$("chat").scrollHeight;
+  if(from==="bot"){lastReply=text;if(settings().voice==="auto")speak(text);}
+}
+let pending=null;
+function speak(t){if(!("speechSynthesis" in window))return false;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="fr-FR";const v=speechSynthesis.getVoices().find(x=>x.lang&&x.lang.toLowerCase().startsWith("fr"));if(v)u.voice=v;speechSynthesis.speak(u);return true;}
+function checkPending(v){
+ if(!pending)return false;const p=pending,t=v.toLowerCase().trim();
+ if(p.type==="quiz"){const n=Number(t)-1;if(![0,1,2].includes(n))return false;pending=null;addMessage((n===p.q.correct?"Bonne réponse ! ":"Pas tout à fait. ")+p.q.why);return true;}
+ if(p.type==="riddle"){pending=null;addMessage(/serviette|essuie/.test(t)?"Exact ! C'est une serviette. 🧩":"Pas tout à fait… Indice : on s'en sert après la douche. La réponse : une serviette. 🧩");return true;}
+ return false;}
+function personaPrefix(){
+ const s=settings();
+ if(s.persona==="mizael"&&!s.custom.trim()){const m=["Écoute bien. ","Je n'ai pas de temps à perdre, mais je t'aide. ","Un duelliste digne de ce nom reste concentré. ","Hmph. Très bien. "];return m[Math.floor(Math.random()*m.length)];}
+ if(s.custom.trim()) return "("+s.custom.trim()+") ";
+ return ({strategist:"Avec calme et stratégie, ",friendly:"Avec plaisir, partenaire ! ",hero:"Courage, duelliste ! ",mysterious:"Les étoiles révèlent peut-être ceci… ",custom:""})[s.persona]||"";
+}
+function reply(text){
+ const t=text.toLowerCase().trim(); let r="";
+ if(/bonjour|salut|coucou|hello/.test(t)) r="Salutations, duelliste ! Je suis prêt à discuter, jouer ou t'aider. Qu'est-ce qu'on fait ?";
+ else if(/comment ça va|comment vas-tu|ça va/.test(t)) r="Mes systèmes sont au beau fixe et le Dragon Tachyon est prêt. Et toi, comment se passe ta journée ?";
+ else if(/merci/.test(t)) r="Toujours prêt à donner un coup de main. Un vrai partenaire ne laisse pas son duelliste tomber !";
+ else if(/qui es-tu|présente|ton nom/.test(t)) r="Je suis "+settings().name+", ton compagnon personnalisable inspiré d'un univers de duels et de dragons. Cette version est un prototype local : je n'ai pas encore de cerveau IA connecté.";
+ else if(/blague|rigole|fais-moi rire|fais moi rire/.test(t)) r=jokes[Math.floor(Math.random()*jokes.length)];
+ else if(/aide|aider|je suis bloqué|je suis bloquee/.test(t)) r="Bien sûr. Explique-moi ce que tu essaies de faire, ce que tu as déjà tenté et ce qui bloque. On va le découper en petites étapes.";
+ else if(/recherche|cherche|internet|google|informations sur/.test(t)) {const q=prompt("Que veux-tu rechercher sur Internet ?");if(q){window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank","noopener");r="J'ai ouvert une recherche web pour « "+q+" ». Lis les résultats et vérifie plusieurs sources. Dans cette version, je ne peux pas lire les pages et en faire un résumé automatiquement.";}else r="Pas de souci. Dis-moi le sujet quand tu es prêt.";}
+ else if(/dragon|tachyon|duel|duelliste/.test(t)) r="Le Dragon Tachyon est prêt à entrer en scène ! Tu peux cliquer sur « Invoquer Tachyon » pour lancer l'effet visuel. Quelle est ta prochaine stratégie ?";
+ else if(/triste|ça va pas|pas bien|stress/.test(t)) r="Je suis là pour t'écouter. Tu peux m'expliquer ce qui se passe, sans pression. On peut aussi chercher ensemble une petite étape pour rendre les choses plus faciles.";
+ else r="Je t'écoute. Pour le moment, je fonctionne avec des réponses simples et des commandes prédéfinies, pas encore avec un vrai modèle d'IA. Tu peux me demander une blague, un quiz, une énigme, une recherche web ou me parler de ce que tu veux construire.";
+ addMessage(personaPrefix()+r);
+}
+function send(){const v=$("message").value.trim();if(!v)return;$("message").value="";addMessage(v,"user");if(!checkPending(v))reply(v);}
+$("send").addEventListener("click",send);$("message").addEventListener("keydown",e=>{if(e.key==="Enter")send();});
+document.querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",()=>{
+ const a=b.dataset.action;
+ if(a==="joke"){addMessage("Raconte-moi une blague.","user");addMessage(personaPrefix()+jokes[Math.floor(Math.random()*jokes.length)]);}
+ if(a==="quiz"){const q=quizzes[Math.floor(Math.random()*quizzes.length)];pending={type:"quiz",q};addMessage(q.q+"\n"+q.a.map((x,i)=>(i+1)+". "+x).join("\n")+"\nRéponds par 1, 2 ou 3.");}
+ if(a==="riddle"){pending={type:"riddle"};addMessage("Énigme : plus je sèche, plus je deviens mouillé. Qui suis-je ? Réponds dans le chat.");}
+ if(a==="motivate")addMessage(personaPrefix()+"Tu n'as pas besoin de tout réussir d'un coup. Choisis une petite étape, concentre-toi dessus, puis avance. Même les grands dragons commencent par un premier battement d'ailes. ⚡");
+ if(a==="research"){const q=prompt("Quel sujet veux-tu rechercher ?");if(q){window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank","noopener");addMessage("Recherche web ouverte pour : "+q+". Compare plusieurs sources avant de retenir une information.");}}
+ if(a==="voice"){if(!lastReply){addMessage("Je n'ai pas encore de réponse à lire.");return;}if(!speak(lastReply))addMessage("La synthèse vocale n'est pas disponible dans ce navigateur.");}
+}));
+$("summon").addEventListener("click",()=>{$("dragonStatus").textContent="Invocation activée ! Le Dragon Tachyon apparaît dans une lueur dorée. (Effet symbolique du prototype)";$("dragon").style.transform="scale(1.25) rotate(-7deg)";$("dragon").style.transition="transform .35s";setTimeout(()=>{$("dragon").style.transform="scale(1) rotate(0deg)"},450);addMessage("Invocation du Dragon Tachyon ! Que le duel commence. 🐉");});
+$("clear").addEventListener("click",()=>{$("chat").innerHTML="";addMessage("Nouvelle conversation ouverte. Je suis prêt quand tu l'es.");});
+function applyColor(c){const root=document.documentElement;const map={gold:["#f6c95d","#6ed9ff"],blue:["#6ed9ff","#a7a0ff"],red:["#ff7b80","#f6c95d"],green:["#75e6a5","#6ed9ff"]};const pair=map[c]||map.gold;root.style.setProperty("--gold",pair[0]);root.style.setProperty("--accent",pair[1]);}
+$("save").addEventListener("click",()=>{const s=settings();try{localStorage.setItem("tachyon-settings",JSON.stringify(s));}catch(e){}$("title").textContent=s.name.toUpperCase();$("saveStatus").textContent="Personnalisation appliquée !";applyColor(s.color);addMessage("Réglages mis à jour. Mon nom est maintenant "+s.name+".");});
+try{const s=JSON.parse(localStorage.getItem("tachyon-settings")||"null");if(s){$("name").value=s.name||"Tachyon";$("persona").value=s.persona||"strategist";$("custom").value=s.custom||"";$("color").value=s.color||"gold";$("voice").value=s.voice||"auto";$("title").textContent=($("name").value).toUpperCase();applyColor(s.color);}}catch(e){}
+
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
+}
+
+addMessage("Salutations, duelliste ! Je suis prêt à discuter, jouer et t'aider. Personnalise-moi dans le panneau de droite. Pour l'instant, je suis un prototype sans IA connectée.");
+</script>
+</body>
+</html>
