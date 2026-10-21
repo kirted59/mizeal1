@@ -35,6 +35,8 @@ a{color:var(--accent)}.gold{color:var(--gold)}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><symbol id="hero" viewBox="0 0 120 290"><g fill="#e3e9f4" stroke="var(--gold)" stroke-width="2.5" stroke-linejoin="round"><path d="M38 66L22 120L16 168L26 170L34 128L44 80Z"/><path d="M82 66L98 120L104 168L94 170L86 128L76 80Z"/><path d="M42 130L38 215L34 262H52L58 215L60 140Z"/><path d="M78 130L82 215L86 262H68L62 215L60 140Z"/><path d="M38 64Q60 58 82 64L78 130Q60 138 42 130Z"/><ellipse cx="42" cy="272" rx="14" ry="9"/><ellipse cx="78" cy="272" rx="14" ry="9"/><path d="M40 26L33 2L51 16ZM80 26L87 2L69 16Z"/><ellipse cx="60" cy="34" rx="22" ry="24"/><ellipse cx="60" cy="90" rx="14" ry="18" fill="#f4f7fc"/></g><path d="M60 108V150" stroke="var(--gold)" stroke-width="3"/><ellipse cx="46" cy="215" rx="7" ry="11" fill="var(--gold)"/><ellipse cx="74" cy="215" rx="7" ry="11" fill="var(--gold)"/><circle cx="21" cy="175" r="6" fill="#1a2233"/><circle cx="99" cy="175" r="6" fill="#1a2233"/><ellipse cx="60" cy="36" rx="16" ry="11" fill="#0e1424"/><g filter="url(#glow)" fill="#ffd24a"><circle cx="53" cy="36" r="4.5"/><circle cx="67" cy="36" r="4.5"/></g></symbol></defs></svg>
+<div id="splash" style="position:fixed;inset:0;z-index:99;background:#080d1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .6s;cursor:pointer"><svg viewBox="0 0 120 290" style="height:62vh;max-height:520px;filter:drop-shadow(0 0 22px #f6c95d55)"><use href="#hero"/></svg><div style="font-size:28px;letter-spacing:.2em;color:var(--gold)">TACHYON</div><div class="small">Touche pour entrer</div></div>
 <header>
   <div class="logo" aria-hidden="true"><svg viewBox="0 0 100 100" width="46" height="46"><polygon points="50,4 92,27 92,73 50,96 8,73 8,27" fill="#0b1426" stroke="var(--gold)" stroke-width="4"/><path d="M18 50 Q50 20 82 50 Q50 80 18 50Z" fill="none" stroke="var(--accent)" stroke-width="3"/><circle cx="50" cy="50" r="12" fill="var(--gold)"/><circle cx="50" cy="50" r="5" fill="#0b1426"/><path d="M50 8V24M50 76V92M14 30l12 8M86 30l-12 8" stroke="var(--gold)" stroke-width="3"/></svg></div>
   <div><h1 id="title">TACHYON</h1><p id="subtitle">Ton compagnon de duel, de discussion et de recherche</p></div>
@@ -66,6 +68,7 @@ a{color:var(--accent)}.gold{color:var(--gold)}
   <button id="save" style="width:100%">Enregistrer ma personnalisation</button>
   <p class="small" id="saveStatus">Les réglages sont conservés dans ce navigateur sur cet appareil.</p>
   <hr>
+  <div style="text-align:center"><svg viewBox="0 0 120 290" height="170"><use href="#hero"/></svg></div>
   <h2>🐲 Dragon Tachyon</h2>
   <div class="dragon" id="dragon"><svg viewBox="0 0 120 100" width="150" height="125" role="img" aria-label="Dragon Tachyon (dessin original)"><path d="M45 30L35 6L60 26ZM70 25L74 2L90 30Z" fill="#274a78" stroke="var(--gold)" stroke-width="2"/><path d="M8 62L40 30L80 24L114 46L100 62L72 58L52 82L24 76Z" fill="#1c3557" stroke="var(--gold)" stroke-width="3" stroke-linejoin="round"/><path d="M40 36L70 40M30 58L60 52" stroke="var(--accent)" stroke-width="2" opacity=".7"/><circle cx="80" cy="42" r="9" fill="var(--accent)" opacity=".35"/><circle cx="80" cy="42" r="5" fill="var(--gold)"/><path d="M104 50l4 2" stroke="var(--gold)" stroke-width="3"/></svg></div>
   <div class="status" id="dragonStatus">Système prêt. En attente de tes ordres, duelliste.</div>
@@ -145,6 +148,7 @@ if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
   navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
 }
 
+(()=>{const sp=$("splash"),h=()=>{sp.style.opacity=0;setTimeout(()=>sp.remove(),600)};sp.onclick=h;setTimeout(h,3500);})();
 addMessage("Salutations, duelliste ! Je suis prêt à discuter, jouer et t'aider. Personnalise-moi dans le panneau de droite. Pour l'instant, je suis un prototype sans IA connectée.");
 </script>
 </body>
